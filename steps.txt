@@ -1,0 +1,17 @@
+# Create ECR Repsitory 
+
+aws ecr create-repository --repository-name eksdemoecr --region us-east-2
+
+# THe output will br
+
+472804039072.dkr.ecr.us-east-2.amazonaws.com/eksdemoecr
+
+# login
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 472804039072.dkr.ecr.us-east-2.amazonaws.com/eksdemoecr
+
+
+# TAg the Iage
+ docker tag eksdemo:v1 472804039072.dkr.ecr.us-east-2.amazonaws.com/eksdemoecr:v1
+
+# Push The Image
+docker push 472804039072.dkr.ecr.us-east-2.amazonaws.com/eksdemoecr:v1
