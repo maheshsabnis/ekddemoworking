@@ -7,6 +7,6 @@ spec:
   selector:
     app: web
   ports:
-    - nodePort: 31479
-      port: 8080
-      targetPort: 9087
+    - nodePort: 31479   # Port used for acceptingn request from Public CLients
+      port: 8080 #Private Internal Port used by Nodes
+      targetPort: 9087 # COntainer Port

@@ -8,6 +8,10 @@
 # Download the AWS CLI and eksctl
 # Configure the aws configure on the dev maching by providing
     - Download the AWS CLI tool
+
+# Download the EKSCTL Tool
+    - Elastic Kubernetes Service CLuster Tool creation CLI
+    https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html    
 # Run the command to configure the AWS from the dev. MAchine
     - aws configure
     - Enter the following details, make sure that you have the access key
@@ -72,6 +76,10 @@ Creating EKS
 - The IAM Role is Mandatory for Cluster Creation
 - Use the 'CloudFormation' Template to CReate the Cluster with EC2 Configuration Subnets Public and Private Cominucations
 #  USing the Following JSON Schema for the CLuster Creation
+- Use the following URL for Creating VPM, SubNets and Security Groups for the EKS Cluser Creation
+    - VPC: The Node
+    - SubNet: Used for INter COmmunication
+    - Security Group : For Managing Public COmmunication to the CLusre from Outside
 https://amazon-eks.s3.us-west-2.amazonaws.com/cloudformation/2020-06-10/amazon-eks-vpc-private-subnets.yaml
  - Go to CloudFormation form AWS Portal
  - CLick on 'Create Stack'
@@ -117,6 +125,20 @@ https://amazon-eks.s3.us-west-2.amazonaws.com/cloudformation/2020-06-10/amazon-e
     - Rollback
 then make sure that the image is created properly
 
+
+- Deploy the Service
+    - kubectl apply -f [Deployment-File-Name].yml
+        - Create a POD and image will be added into it
+    - kubectl apply -f [Service-File-Name].yml
+        - Deploy the service
+        - Expose the service on Port
+            - targetPort: For Container
+            - port: for Internal service COmmunication
+            - NodePort: Exposed by the Pods in Node
+                - TCP based Port, this is used for Public COmunication
+    NOTE: Ypu can have a single deployment and service file        
+
+
 - You can describe  teh Pods using Following command
     - kubectl describe pod [POD-NAME]
 
@@ -125,5 +147,25 @@ then make sure that the image is created properly
 
 - You MUST get the public IPs of the Node, run the following command to get the public IP
     -  kubectl get nodes -o wide  
+        - Note: The above command shoes public IPs aka External IPs for nodes
+        - The one that does not show publiuc IP is internal Private subnet group node for internal communication  
 
-To access the service, add the NodePOrt into the security group f the cluster in the INbout and outboud connection
+To access the service, add the NodePOrt into the security group of the cluster in the Inbound and outbouud connection
+
+
+# K8S Service DEployment Types on Clusters
+    - Cluster
+        - Nodes, Local VM that is having K8 Master Controller Service Running. THis also has IP Addresses
+            - Pods, Logical Sections in eachg node for containing Microservice Containers
+                - Containers
+                    - The Image
+                    - Each COntainer contain a single Image
+                    - These containers COmmunicates with each other using Private ports
+    - Internal IPs aka Private IPs
+        - These are called as  'ClusterIPs'
+            - These are used for INternal COmmunciations across Nodes with all its resoureces
+    - NodePort
+        - The Public Port the will be linkied with Private Port or Tareget Port to Communicate
+            - To access the NodePort, the Node's Piblic IP must be configured with the Port in security Group
+    - LoadBalalcer
+        - The Pure Public Dateway for the COmmunication                

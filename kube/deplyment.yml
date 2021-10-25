@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: eks-node
-          image: 472804039072.dkr.ecr.us-east-2.amazonaws.com/eksdemoecr:0.0.1
+          image: 472804039072.dkr.ecr.us-east-2.amazonaws.com/b1ecr:0.0.1
           resources:
             limits:
               cpu: "500m"
