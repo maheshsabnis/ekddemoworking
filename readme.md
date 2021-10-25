@@ -161,11 +161,22 @@ To access the service, add the NodePOrt into the security group of the cluster i
                     - The Image
                     - Each COntainer contain a single Image
                     - These containers COmmunicates with each other using Private ports
-    - Internal IPs aka Private IPs
+    - Internal IPs aka Private IPs aka CLusterIP
         - These are called as  'ClusterIPs'
             - These are used for INternal COmmunciations across Nodes with all its resoureces
     - NodePort
         - The Public Port the will be linkied with Private Port or Tareget Port to Communicate
-            - To access the NodePort, the Node's Piblic IP must be configured with the Port in security Group
+            - To access the NodePort, the Node's Public IP must be configured with the Port in security Group
+            - THis is a mechansim to set 'How the Request from the public client's can be accepted'
+            - NodePort is the actual communicaiton port using which the public client can acces the service using the allowed traffic from the Security Group 
     - LoadBalalcer
-        - The Pure Public Dateway for the COmmunication                
+        - The Pure Public Dateway for the COmmunication           
+
+    - The Security Group
+        - A virtual FIrewall for the deployed resources on the cloud
+        - This is used to control inbound and outbound traffic
+        - Allow Rules
+        - Deny Rules
+        - The Cloud Deployed Resources MUST use the Security Group for Prividing Resources access          
+    - In the CLoud Deployment, the EKS CLuster MUST have at-least 2 Availability Zones(AZ)
+        - AZ isone ot more discrete Data centers with redudent power, netwoking and connectivity       
